@@ -104,6 +104,7 @@ try:
         
         # Look for Analog Stick Events
         if event.type == ecodes.EV_ABS:
+            print(f"Axis Moved! Code: {event.code} | Value: {event.value}")
             
             # Left Stick Y-Axis (Usually Code 1)
             if event.code == 1: 
