@@ -40,29 +40,30 @@ def get_gamepad():
 # ===========================================================================
 # HELPER: Map Stick Value to Motor Speed
 # ===========================================================================
+# ===========================================================================
+# HELPER: Map Stick Value to Motor Speed
+# ===========================================================================
 def map_stick_to_motor(value, min_val=0, max_val=255):
-    """
-    Converts raw joystick input (usually 0 to 255 or -32768 to 32767)
-    into a motor speed (-1.0 to 1.0).
-    """
-    # Normalize to -1.0 (full back) to 1.0 (full forward)
-    # This formula works for standard 8-bit controllers (0-255)
-    # If your controller is 16-bit, this will adjust automatically roughly, 
-    # but 0-255 is standard for USB dongle clones.
-    
-    # Check if input is 8-bit (0-255) standard generic
+    # 1. Handle Generic 8-bit Controllers (0 to 255)
     if max_val <= 255:
         center = 128
         radius = 127
         normalized = (value - center) / radius
-        # Invert because usually Up is 0 (negative) on joysticks
         normalized = -normalized 
+        
+    # 2. Handle Xbox/PS Controllers (-32768 to 32767)
     else:
-        # 16-bit (Xbox/PS controller) usually -32768 to 32767
         normalized = value / 32767
-        normalized = -normalized # Invert Y axis
+        normalized = -normalized
 
-    # Apply Deadzone
+    # 3. SAFETY CLAMP (The Fix!)
+    # Force value to stay between -1 and 1 no matter what
+    if normalized > 1.0:
+        normalized = 1.0
+    elif normalized < -1.0:
+        normalized = -1.0
+
+    # 4. Apply Deadzone
     if abs(normalized) < DEADZONE:
         return 0.0
     
