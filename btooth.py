@@ -33,7 +33,7 @@ def get_gamepad():
         # We look for devices with 'Gamepad', 'Joystick', or 'Controller' in the name
         # Most USB Wireless dongles show up as "Generic USB Joystick" or similar.
         print(f"  Found: {device.name}")
-        if any(x in device.name.lower() for x in ['gamepad', 'joystick', 'controller', 'xbox', 'playstation']):
+        if any(x in device.name.lower() for x in ['gamepad', 'joystick', 'controller', 'xbox', 'playstation', 'shanwan', 'android']):
             return device
     return None
 
