@@ -13,7 +13,7 @@ import sys
 # Motor Pins (Same as before)
 # Motor A (Left):  10, 9
 # Motor B (Right): 8, 7
-robot = Robot(left=(10, 9), right=(8, 7))
+robot = Robot(left=(8, 7), right=(10, 9))
 
 # Status LED
 status_led = LED(25)
